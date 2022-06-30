@@ -100,13 +100,16 @@ const container = document.getElementById("container");
 
 posts.forEach((post, index) => {
 
-
-
     const { id, content, media, author, likes, is_liked, created } = post;
     console.log(id, content, media, author.name, author.image, likes, is_liked, created);
+    let is_liked_class = "";
 
+    if (is_liked === true)
+        is_liked_class = "like-button--liked"
+    else
+        is_liked_class = ""
 
-    container.innerHTML += `<div class="post">
+    container.innerHTML += `<div class="post" id="post-${id}">
     <div class="post__header">
         <div class="post-meta">
             <div class="post-meta__icon">
@@ -124,8 +127,8 @@ posts.forEach((post, index) => {
     </div>
     <div class="post__footer">
         <div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+            <div class="likes__cta ">
+                <a class=" ${is_liked_class} like-button js-like-button " href="#post-${id}" data-postid="1">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
@@ -137,6 +140,16 @@ posts.forEach((post, index) => {
     </div>
     </div>`
 
+});
 
+
+
+const LikeButtonOfThePost = document.querySelectorAll(`.likes__cta>a`);
+
+LikeButtonOfThePost.forEach(element => {
+
+    element.addEventListener('click', () => {
+        element.classList.toggle("like-button--liked");
+    });
 
 });
